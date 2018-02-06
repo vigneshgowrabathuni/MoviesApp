@@ -1,18 +1,22 @@
 import React from 'react';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from 'material-ui/Card';
 import {
   Table,
   TableBody,
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
+  TableRowColumn
 } from 'material-ui/Table';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import {List, ListItem} from 'material-ui/List';
-import axios from 'axios';
 export default class MoviesTable extends React.Component{
   constructor(props){
     super(props);
@@ -20,39 +24,29 @@ export default class MoviesTable extends React.Component{
     this.handleMovie = this.handleMovie.bind(this);
   }
   handleMovie(myItem){
-    console.log(myItem.Title);
     this.setState({mItem:myItem, open: true});
   }
   handleOpen = () => {
     this.setState({open: true});
   };
-
   handleClose = () => {
     this.setState({open: false});
   };
   render(){
     var myData = this.props.mData;
-    const actions = [
-      <FlatButton
-      label="Close"
-      primary={true}
-      onClick={this.handleClose}
-      />
-    ];
-
     const customContentStyle = {
-      width: '22%'
+      width: '25%'
     };
     return<div>
     <Table textAlign='center' verticalAlign='middle'>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
     <TableRow>
-    <TableHeaderColumn style={{ width: 100 }}>ID</TableHeaderColumn>
-    <TableHeaderColumn style={{ width: 200 }}>Title</TableHeaderColumn>
-    <TableHeaderColumn style={{ width: 100 }}>Year</TableHeaderColumn>
-    <TableHeaderColumn style={{ width: 200 }}>Actors</TableHeaderColumn>
-    <TableHeaderColumn style={{ width: 200 }}>Director</TableHeaderColumn>
-    <TableHeaderColumn style={{ width: 200 }}>View Album</TableHeaderColumn>
+    <TableHeaderColumn >ID</TableHeaderColumn>
+    <TableHeaderColumn >Title</TableHeaderColumn>
+    <TableHeaderColumn className="hidden-xs">Year</TableHeaderColumn>
+    <TableHeaderColumn className="hidden-xs">Actors</TableHeaderColumn>
+    <TableHeaderColumn className="hidden-xs">Director</TableHeaderColumn>
+    <TableHeaderColumn >View Album</TableHeaderColumn>
     </TableRow>
     </TableHeader>
     <TableBody displayRowCheckbox={false}>
@@ -60,12 +54,12 @@ export default class MoviesTable extends React.Component{
       Object.keys(myData).map((key, index) => {
         const myItem = myData[key]
         return <TableRow  key={index+1}>
-        <TableRowColumn style={{ width: 100 }}>{index+1}</TableRowColumn>
-        <TableRowColumn style={{ width: 200 }}>{myItem.Title}</TableRowColumn>
-        <TableRowColumn style={{ width: 100 }}>{myItem.Year}</TableRowColumn>
-        <TableRowColumn style={{ width: 200 }}>{myItem.Actors}</TableRowColumn>
-        <TableRowColumn style={{ width: 200 }}>{myItem.Director}</TableRowColumn>
-        <TableRowColumn style={{ width: 200 }}><RaisedButton label="View" primary={true} onClick = {this.handleMovie.bind(this, myItem)}/></TableRowColumn>
+        <TableRowColumn >{index+1}</TableRowColumn>
+        <TableRowColumn >{myItem.Title}</TableRowColumn>
+        <TableRowColumn className="hidden-xs">{myItem.Year}</TableRowColumn>
+        <TableRowColumn className="hidden-xs">{myItem.Actors}</TableRowColumn>
+        <TableRowColumn className="hidden-xs">{myItem.Director}</TableRowColumn>
+        <TableRowColumn ><RaisedButton label="View" primary={true} onClick = {this.handleMovie.bind(this, myItem)}/></TableRowColumn>
         </TableRow>
       })
     }
@@ -76,17 +70,15 @@ export default class MoviesTable extends React.Component{
         open={this.state.open}
         onRequestClose={this.handleClose}
         contentStyle={customContentStyle}>
-        <Card style={{width:"250px", height:"400px"}}>
-            <CardMedia style={{width:"250px", height:"300px"}}>
-            <img src={this.state.mItem.Poster} style={{width:"250px", height:"300px"}} alt="Movie Poster" />
-            </CardMedia>
-            <CardText>
+        <Card style={{width:"30dp", height:"60dp"}}>
+          <CardMedia style={{width:"30dp", height:"60dp"}}>
+            <img src={this.state.mItem.Poster} style={{width:"30dp", height:"60dp"}} alt="Movie Poster" />
+          </CardMedia>
+          <CardText>
             Title: {this.state.mItem.Title}
-
-            </CardText>
+          </CardText>
         </Card>
-
-    </Dialog>
+      </Dialog>
     </div>
   }
 }
